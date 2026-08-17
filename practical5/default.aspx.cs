@@ -11,7 +11,6 @@ namespace WebApplication4
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            // Check all validation controls
             Page.Validate();
 
             if (!Page.IsValid)
@@ -21,27 +20,22 @@ namespace WebApplication4
 
             StringBuilder result = new StringBuilder();
 
-            // Full Name
             result.Append("Full Name: ");
             result.Append(Server.HtmlEncode(TextBox3.Text));
             result.Append("<br />");
 
-            // Email
             result.Append("Email: ");
             result.Append(Server.HtmlEncode(TextBox4.Text));
             result.Append("<br />");
 
-            // Mobile
             result.Append("Mobile: ");
             result.Append(Server.HtmlEncode(TextBox5.Text));
             result.Append("<br />");
 
-            // College
             result.Append("College: ");
             result.Append(Server.HtmlEncode(TextBox6.Text));
             result.Append("<br />");
 
-            // Department
             result.Append("Department: ");
 
             if (RadioComputer.Checked)
@@ -67,14 +61,12 @@ namespace WebApplication4
 
             result.Append("<br />");
 
-            // Event
             result.Append("Event: ");
             result.Append(
                 Server.HtmlEncode(DropDownList1.SelectedItem.Text)
             );
             result.Append("<br />");
 
-            // Gender
             result.Append("Gender: ");
 
             if (RadioMale.Checked)
@@ -92,7 +84,6 @@ namespace WebApplication4
 
             result.Append("<br />");
 
-            // Skills
             result.Append("Skills: ");
 
             bool skillSelected = false;
@@ -128,12 +119,10 @@ namespace WebApplication4
 
             result.Append("<br />");
 
-            // Address
             result.Append("Address: ");
             result.Append(Server.HtmlEncode(TextArea1.Text));
             result.Append("<br />");
 
-            // Terms
             result.Append("Terms Accepted: ");
 
             if (Checkbox6.Checked)
@@ -145,7 +134,6 @@ namespace WebApplication4
                 result.Append("No");
             }
 
-            // Display all data in DBResult
             DBResult.Text = result.ToString();
         }
     }
