@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<div class="box">
+
+    <h1>Welcome</h1>
+
+    <p style="text-align:center;">
+        Welcome to the Student Feedback Management System.
+    </p>
+
+    <p style="text-align:center;">
+        Please click the Feedback link to submit your feedback.
+    </p>
+
+    <div style="text-align:center;">
+
+        @Html.ActionLink(
+            "Go to Feedback",
+            "Feedback",
+            "Home",
+            null,
+            new { @class = "btn" }
+        )
+
+    </div>
+
+</div>
