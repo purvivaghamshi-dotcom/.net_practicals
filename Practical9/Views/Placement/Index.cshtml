@@ -1,0 +1,218 @@
+﻿
+@model Practical9.Models.PlacementDashboard
+
+@{
+    ViewBag.Title = "Placement Dashboard";
+
+    var grid = new WebGrid(
+        source: Model.Students,
+        canPage: true,
+        rowsPerPage: 10
+    );
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Placement Dashboard</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f5f9;
+            color: #263445;
+        }
+
+        .header {
+            background: #172b4d;
+            color: white;
+            padding: 25px 40px;
+        }
+
+            .header h1 {
+                margin: 0;
+                font-size: 28px;
+            }
+
+            .header p {
+                margin-bottom: 0;
+                color: #cbd5e1;
+            }
+
+        .container {
+            width: 90%;
+            margin: 30px auto;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            border-left: 5px solid #2563eb;
+        }
+
+            .card h3 {
+                margin: 0;
+                color: #64748b;
+                font-size: 15px;
+            }
+
+            .card h2 {
+                margin-bottom: 0;
+                font-size: 30px;
+                color: #172b4d;
+            }
+
+        .table-box {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+            .table-box h2 {
+                margin-top: 0;
+                color: #172b4d;
+            }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #172b4d;
+            color: white;
+            padding: 14px;
+            text-align: left;
+        }
+
+        td {
+            padding: 13px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tr:hover {
+            background: #f1f5f9;
+        }
+
+        .status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .placed {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .notplaced {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        @@media(max-width: 800px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @@media(max-width: 500px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>Placement Dashboard</h1>
+        <p>Student Placement Management System</p>
+    </div>
+
+    <div class="container">
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>Total Students</h3>
+                <h2>@Model.TotalStudents</h2>
+            </div>
+
+            <div class="card">
+                <h3>Placed Students</h3>
+                <h2>@Model.PlacedStudents</h2>
+            </div>
+
+            <div class="card">
+                <h3>Total Companies</h3>
+                <h2>@Model.TotalCompanies</h2>
+            </div>
+
+            <div class="card">
+                <h3>Placement Percentage</h3>
+                <h2>@Model.PlacementPercentage.ToString("F2")%</h2>
+            </div>
+
+        </div>
+
+        <div class="table-box">
+
+            <h2>Student Placement Records</h2>
+
+            @grid.GetHtml(
+                     tableStyle: "table",
+                     headerStyle: "grid-header",
+                     alternatingRowStyle: "alternate",
+                     columns: grid.Columns(
+
+                         grid.Column("StudentId", "Student ID"),
+
+                         grid.Column("StudentName", "Student Name"),
+
+                         grid.Column("Branch", "Branch"),
+
+                         grid.Column("CompanyName", "Company"),
+
+                         grid.Column(
+                             "Package",
+                             "Package (LPA)",
+                             format: item => item.Package > 0
+                                 ? item.Package.ToString("0.00")
+                                 : "-"
+                         ),
+
+                         grid.Column(
+                             "Status",
+                             "Placement Status",
+                             format: item => Html.Raw(
+                                 item.Status == "Placed"
+                                 ? "<span class='status placed'>Placed</span>"
+                                 : "<span class='status notplaced'>Not Placed</span>"
+                             )
+                         )
+                     )
+                 )
+
+        </div>
+
+    </div>
+
+</body>
+</html>
